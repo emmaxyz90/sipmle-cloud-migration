@@ -251,10 +251,11 @@ This enables **safe, repeatable, and zero-downtime deployments**.
 
 # 12. Trade-offs and Alternatives
 
-| Alternative    | Reason Not Chosen                                                |
-| -------------- | ---------------------------------------------------------------- |
-| AKS            | Adds operational overhead for a small team                       |
-| Container Apps | Slightly more complex than Functions for simple queue processing |
-| Cosmos DB      | Higher cost and complexity for relational metadata               |
-| Storage Queues | Lacks advanced messaging features                                |
-| VM Scale Sets  | Maintains monolithic infrastructure patterns                     |
+| Alternative Considered | Why Not Chosen |
+|---|---|
+| **Azure Kubernetes Service (AKS)** | Powerful but adds significant operational complexity (cluster management, networking, Helm charts). Overkill for a small team at early scale. Can migrate later if needed. |
+| **Azure Container Apps** | Good middle ground, but Azure Functions on Consumption Plan offers true scale-to-zero and simpler event-driven scaling for queue processing. |
+| **Cosmos DB** | Multi-model, globally distributed — but adds cost and complexity. Relational metadata fits Azure SQL well; the serverless tier matches the cost profile. |
+| **Azure Storage Queues** | Simpler and cheaper, but lacks dead-letter queues and advanced features. Service Bus provides better reliability guarantees for document processing. |
+| **Azure VM Scale Sets** | Would replicate the monolith pattern. PaaS/serverless services reduce undifferentiated infrastructure management. |
+| **Event Grid instead of Service Bus** | Event Grid is excellent for event routing but Service Bus is better suited for reliable work-queue semantics with retry and dead-lettering. |
